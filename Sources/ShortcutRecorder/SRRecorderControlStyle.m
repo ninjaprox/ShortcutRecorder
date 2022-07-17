@@ -845,10 +845,7 @@ NSUserInterfaceLayoutDirection SRRecorderControlStyleComponentsLayoutDirectionTo
 
         @synchronized (self)
         {
-            __auto_type key = [_SRRecorderControlStyleResourceLoaderCacheImageKey new];
-            key.identifier = [aStyle.identifier copy];
-            key.components = [aStyle.effectiveComponents copy];
-            key.name = [aName copy];
+            NSString *key = [NSString stringWithFormat:@"%@-%@%@", aStyle.identifier, aStyle.effectiveComponents.stringRepresentation, aName];
             NSArray *imageNameCache = [self->_cache objectForKey:key];
 
             if (!imageNameCache)
