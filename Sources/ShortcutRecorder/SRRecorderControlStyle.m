@@ -502,7 +502,7 @@ NSUserInterfaceLayoutDirection SRRecorderControlStyleComponentsLayoutDirectionTo
 
     return [self.identifier isEqual:anObject.identifier] &&
         [self.components isEqual:anObject.components] &&
-        [self.name isEqual:anObject];
+        [self.name isEqual:anObject.name];
 }
 
 - (id)copyWithZone:(NSZone *)aZone
@@ -845,7 +845,10 @@ NSUserInterfaceLayoutDirection SRRecorderControlStyleComponentsLayoutDirectionTo
 
         @synchronized (self)
         {
-            NSString *key = [NSString stringWithFormat:@"%@-%@%@", aStyle.identifier, aStyle.effectiveComponents.stringRepresentation, aName];
+            __auto_type key = [_SRRecorderControlStyleResourceLoaderCacheImageKey new];
+            key.identifier = [aStyle.identifier copy];
+            key.components = [aStyle.effectiveComponents copy];
+            key.name = [aName copy];
             NSArray *imageNameCache = [self->_cache objectForKey:key];
 
             if (!imageNameCache)
